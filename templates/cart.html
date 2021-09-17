@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]> <html class="lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]> <html class="lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Shopping Cart Checkout Widget</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+<body>
+
+  <div class="cart">
+    <div class="cart-top">
+      <h2 class="cart-top-title">CART{{itc}}</h2>
+      <div class="cart-top-info">Items</div>
+    </div>
+ {% for i in ci %}
+    <ul>
+      <li class="cart-item">
+        <span class="cart-item-pic">
+          <a href="{{i.prodt.get_url}}"><img src="{{i.prodt.img.url}}" alt="{{i.prodt.name}}" style="height:70;width:70;"/></a>
+         </span>
+        <span class="cart-item-desc">
+            <a href="{{i.prodt.get_url}}">ID: {{i.prodt.name}}</a><br>
+        </span>
+
+
+        <a href="{% url 'remove' i.prodt.id %}"><i class="fa fa-trash-o" style="font-size:20px"></i></a>
+      </li>
+       </ul>
+
+      <div class="number">
+	<span class="minus"><a href="{% url 'cart_decrement' i.prodt.id %}"><i class="fa fa-minus" style="font-size:14px"></i></a></span>
+	<input type="text" value="Quantity {{i.quan}}">
+	<span class="plus"><a href="{% url 'addcart' i.prodt.id %}"><i class="fa fa-plus" style="font-size:14px"></i></a></span>
+
+    <span class="cart-item-price">Price: {{i.prodt.price}}</span><br>
+          <span class="price">Price: {{i.total}}</span>
+</div>
+
+
+    </div>
+  </div>
+{% endfor %}
+
+  <div class="cart-bottom"><br>
+      <span class="price" style="color:white;background-color:red;"><b>Total: {{t}}</span>
+
+  </div>
+<br><br><br>
+</body>
+</html>
+
+{% endblock %}
